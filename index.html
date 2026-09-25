@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STI College Ormoc - Student Grade Viewing Portal</title>
+    <style>
+      :root {
+        --primary: #0d5d99;
+        --primary-dark: #0a4e86;
+        --primary-soft: #dfeef8;
+        --panel-bg: #f2f3f5;
+        --panel-2: #edf5fb;
+        --line: #d7dfe7;
+        --text: #0c304a;
+        --muted: #4b667a;
+        --card: #ffffff;
+        --blue-strong: #0d5d99;
+        --blue-light: #eef5fb;
+        --green: #5ab56a;
+        --green-soft: #dff1e4;
+        --red: #de4d59;
+        --red-soft: #f8dfe0;
+        --purple: #9b7de7;
+        --purple-soft: #e9e2ff;
+        --shadow: rgba(9, 63, 95, 0.12);
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #eef3f6;
+        color: var(--text);
+      }
+
+      body { min-height: 100vh; }
+
+      .page {
+        width: 100%;
+        min-height: 100vh;
+        background: #e9edf1;
+      }
+
+      .topbar {
+        height: 82px;
+        background: linear-gradient(180deg, #0d6aa9 0%, #0a5e97 100%);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 34px 0 32px;
+        box-shadow: inset 0 -1px rgba(255,255,255,0.18);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .logo {
+        width: 42px;
+        height: 42px;
+        position: relative;
+        background: #f4c94b;
+        border-radius: 10px;
+        box-shadow: inset 0 -2px rgba(0,0,0,0.1);
+      }
+
+      .logo:before {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 12px;
+        left: 13px;
+        top: 11px;
+        background: #0d5d99;
+        clip-path: polygon(50% 0%, 100% 55%, 50% 100%, 0% 55%);
+      }
+
+      .logo:after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 9px;
+        left: 11px;
+        top: 20px;
+        background: #0d5d99;
+        border-radius: 3px 3px 0 0;
+      }
+
+      .brand-text {
+        line-height: 1.05;
+        color: #fff;
+        font-weight: 700;
+      }
+
+      .brand-text .title { font-size: 23px; letter-spacing: 0.2px; }
+      .brand-text .subtitle { font-size: 15px; font-weight: 500; opacity: 0.92; }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: rgba(255,255,255,0.9);
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      .nav-item {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+      }
+
+      .nav-item .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.9);
+        display: inline-block;
+      }
+
+      .content {
+        max-width: 1230px;
+        margin: 26px auto 0;
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 28px;
+        padding: 0 18px 50px;
+      }
+
+      .privacy-locked .content {
+        display: block;
+        max-width: 560px;
+      }
+
+      .privacy-locked .nav,
+      .privacy-locked .profile-mini,
+      .privacy-locked .welcome-box h2,
+      .privacy-locked .welcome-box p,
+      .privacy-locked .info-note,
+      .privacy-locked .side-art,
+      .privacy-locked .main-panel {
+        display: none;
+      }
+
+      .privacy-locked .sidebar {
+        min-height: 0;
+      }
+
+      .privacy-locked .welcome-box {
+        padding: 24px;
+        min-height: 0;
+      }
+
+      .privacy-locked .input-group {
+        margin-top: 0;
+      }
+
+      .sidebar {
+        background: rgba(255,255,255,0.25);
+        min-height: 720px;
+        border-radius: 16px;
+        padding: 0;
+      }
+
+      .welcome-box {
+        background: rgba(255,255,255,0.53);
+        border: 1px solid rgba(14,99,153,0.12);
+        border-radius: 14px;
+        padding: 22px 20px 14px;
+        min-height: 246px;
+      }
+
+      .profile-mini {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 0 18px;
+      }
+
+      .avatar-small {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #dfeaf4 0%, #bfd5eb 100%);
+        position: relative;
+        border: 3px solid rgba(255,255,255,0.7);
+        box-shadow: 0 2px 8px rgba(18, 74, 109, 0.08);
+      }
+
+      .avatar-small:before {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        left: 16px;
+        top: 12px;
+        background: #c7d7e7;
+        border-radius: 50%;
+      }
+
+      .avatar-small:after {
+        content: "";
+        position: absolute;
+        width: 25px;
+        height: 16px;
+        left: 12px;
+        bottom: 8px;
+        background: #c7d7e7;
+        border-radius: 12px 12px 6px 6px;
+      }
+
+      .welcome-box h2 {
+        margin: 0 0 10px;
+        font-size: 25px;
+        font-weight: 700;
+        color: #0d4674;
+      }
+
+      .welcome-box p {
+        margin: 0;
+        color: #1a4d73;
+        font-size: 15px;
+        line-height: 1.5;
+        max-width: 180px;
+      }
+
+      .input-group { margin-top: 26px; }
+
+      .input-label {
+        display: block;
+        font-size: 16px;
+        font-weight: 700;
+        color: #0e4d7d;
+        margin-bottom: 10px;
+      }
+
+      .field-wrap {
+        display: flex;
+        align-items: center;
+        background: rgba(255,255,255,0.45);
+        border: 1px solid rgba(17,109,160,0.18);
+        border-radius: 12px;
+        padding: 0 14px 0 12px;
+        height: 52px;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+      }
+
+      .icon-user, .icon-search, .icon-book, .icon-cal, .icon-info, .icon-grades, .icon-check, .icon-cross, .icon-star, .icon-info2, .icon-alert {
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        position: relative;
+      }
+
+      .icon-user:before, .icon-user:after, .icon-search:before, .icon-search:after, .icon-book:before, .icon-book:after, .icon-cal:before, .icon-cal:after, .icon-info:before, .icon-info:after, .icon-grades:before, .icon-grades:after, .icon-check:before, .icon-check:after, .icon-cross:before, .icon-cross:after, .icon-star:before, .icon-star:after, .icon-info2:before, .icon-info2:after, .icon-alert:before, .icon-alert:after {
+        content: "";
+        position: absolute;
+      }
+
+      .icon-user:before {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #5d6d7f;
+        left: 6px;
+        top: 2px;
+      }
+
+      .icon-user:after {
+        width: 18px;
+        height: 12px;
+        background: #5d6d7f;
+        border-radius: 10px 10px 5px 5px;
+        left: 2px;
+        bottom: 2px;
+      }
+
+      .icon-search:before {
+        width: 14px;
+        height: 14px;
+        border: 3px solid #fdfdfd;
+        border-radius: 50%;
+        left: 2px;
+        top: 2px;
+      }
+
+      .icon-search:after {
+        width: 10px;
+        height: 3px;
+        background: #fdfdfd;
+        transform: rotate(45deg);
+        right: 1px;
+        bottom: 3px;
+        border-radius: 3px;
+      }
+
+      .field-wrap input {
+        flex: 1;
+        border: 0;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+        color: #35556d;
+        padding-left: 10px;
+        font-family: inherit;
+      }
+
+      .field-wrap input::placeholder { color: #7d95a8; }
+
+      .grade-btn {
+        width: 100%;
+        border: 0;
+        background: linear-gradient(180deg, #0d5d99 0%, #0a5090 100%);
+        color: #fff;
+        font-weight: 700;
+        font-size: 16px;
+        height: 54px;
+        border-radius: 12px;
+        margin-top: 18px;
+        box-shadow: 0 6px 16px rgba(10, 93, 153, 0.2);
+        cursor: pointer;
+      }
+
+      .status-message {
+        margin-top: 14px;
+        min-height: 22px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #ae3a47;
+      }
+
+      .status-message.success {
+        color: #1b7a4d;
+      }
+
+      .grade-btn span { display: inline-flex; align-items: center; gap: 10px; }
+      .grade-btn .icon-search { transform: scale(0.8); }
+
+      .info-note {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 18px;
+        color: #2c7ba8;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .icon-alert {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #dbeaf5;
+      }
+
+      .icon-alert:before {
+        width: 2px;
+        height: 8px;
+        background: #2e6b93;
+        left: 8px;
+        top: 4px;
+      }
+
+      .icon-alert:after {
+        width: 2px;
+        height: 2px;
+        background: #2e6b93;
+        border-radius: 50%;
+        left: 8px;
+        bottom: 4px;
+      }
+
+      .side-art {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        position: relative;
+      }
+
+      .laptop {
+        position: relative;
+        width: 190px;
+        height: 120px;
+      }
+
+      .laptop-screen {
+        position: absolute;
+        left: 20px;
+        top: 6px;
+        width: 150px;
+        height: 93px;
+        background: rgba(170, 208, 231, 0.3);
+        border: 4px solid #7ca4bf;
+        border-radius: 10px 10px 8px 8px;
+      }
+
+      .laptop-screen:before {
+        content: "";
+        position: absolute;
+        inset: 12px 16px 18px;
+        border-radius: 6px;
+        background: rgba(255,255,255,0.18);
+      }
+
+      .laptop-base {
+        position: absolute;
+        left: 10px;
+        bottom: 0;
+        width: 170px;
+        height: 14px;
+        background: #7ea8c2;
+        border-radius: 0 0 12px 12px;
+      }
+
+      .laptop-base:before {
+        content: "";
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        top: -4px;
+        height: 7px;
+        border-radius: 4px;
+        background: #9cbed7;
+      }
+
+      .book {
+        position: absolute;
+        left: 0;
+        bottom: 16px;
+        width: 68px;
+        height: 44px;
+        border-radius: 8px 8px 0 0;
+        background: #dfeff6;
+        border: 3px solid #7ea8c2;
+        border-bottom: 0;
+        transform: rotate(-12deg);
+      }
+
+      .book:before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        width: 2px;
+        height: 24px;
+        background: rgba(75, 122, 155, 0.7);
+        box-shadow: 8px 0 rgba(75,122,155,0.7), 16px 0 rgba(75,122,155,0.7), 24px 0 rgba(75,122,155,0.7), 32px 0 rgba(75,122,155,0.7);
+      }
+
+      .side-ink {
+        position: absolute;
+        left: 60px;
+        bottom: 54px;
+        font-size: 16px;
+        color: #82a7bd;
+        transform: rotate(-5deg);
+        font-weight: 700;
+        font-style: italic;
+      }
+
+      .main-panel {
+        background: rgba(255,255,255,0.42);
+        border-radius: 16px;
+        border: 1px solid rgba(14,99,153,0.12);
+        padding: 0 0 18px;
+        min-height: 720px;
+      }
+
+      .panel-locked {
+        filter: blur(7px);
+        opacity: 0.26;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .student-card {
+        background: rgba(153, 193, 220, 0.2);
+        border: 1px solid rgba(25,103,157,0.14);
+        border-radius: 12px;
+        padding: 14px 18px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 20px;
+      }
+
+      .student-meta {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .avatar-large {
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #d9edf9 0%, #bfd5eb 100%);
+        position: relative;
+        border: 4px solid rgba(255,255,255,0.7);
+      }
+
+      .avatar-large:before {
+        content: "";
+        position: absolute;
+        width: 29px;
+        height: 29px;
+        border-radius: 50%;
+        left: 28px;
+        top: 18px;
+        background: #cadbe9;
+      }
+
+      .avatar-large:after {
+        content: "";
+        position: absolute;
+        width: 40px;
+        height: 22px;
+        background: #cadbe9;
+        border-radius: 20px 20px 12px 12px;
+        left: 22px;
+        bottom: 14px;
+      }
+
+      .student-name {
+        margin: 0;
+        font-size: 25px;
+        font-weight: 800;
+        color: #0a4f7f;
+      }
+
+      .student-details {
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        color: #244b68;
+        font-size: 15px;
+      }
+
+      .student-details strong { font-weight: 700; }
+
+      .last-access {
+        text-align: right;
+        color: #214c70;
+        font-weight: 600;
+      }
+
+      .secure-controls {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 10px;
+      }
+
+      .secure-toggle {
+        border: 0;
+        background: rgba(13, 93, 153, 0.12);
+        color: #0a4f7f;
+        border-radius: 10px;
+        font-weight: 700;
+        padding: 9px 12px;
+        cursor: pointer;
+      }
+
+      .secure-label {
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #2d597d;
+        font-weight: 700;
+      }
+
+      .masked-value,
+      .masked-grade,
+      .masked-remark {
+        filter: blur(5px);
+        user-select: none;
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
+      .masked-value {
+        letter-spacing: 0.1em;
+      }
+
+      .last-access .slot {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        margin-bottom: 6px;
+      }
+
+      .last-access .slot .icon-cal {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #0b5d96;
+        border-radius: 5px;
+      }
+
+      .last-access .slot .icon-cal:before {
+        width: 10px;
+        height: 2px;
+        background: #0b5d96;
+        left: 4px;
+        top: 6px;
+      }
+
+      .last-access .slot .icon-cal:after {
+        width: 2px;
+        height: 2px;
+        background: #0b5d96;
+        left: 6px;
+        top: 12px;
+        border-radius: 50%;
+        box-shadow: 6px 0 0 #0b5d96, 0 -6px 0 #0b5d96;
+      }
+
+      .tabs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 18px;
+        border-bottom: 1px solid rgba(13,72,106,0.16);
+      }
+
+      .tab {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 160px;
+        justify-content: center;
+        padding: 14px 12px 12px;
+        font-size: 15px;
+        font-weight: 700;
+        color: #2d5d80;
+        border-bottom: 3px solid transparent;
+      }
+
+      .tab.is-active {
+        color: #0d5d99;
+        border-bottom-color: #0d5d99;
+      }
+
+      .icon-book {
+        width: 18px;
+        height: 18px;
+      }
+
+      .icon-book:before {
+        width: 12px;
+        height: 12px;
+        background: #3a6785;
+        left: 2px;
+        top: 2px;
+        border-radius: 3px;
+        box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8);
+      }
+
+      .icon-book:after {
+        width: 13px;
+        height: 12px;
+        border-left: 2px solid #3a6785;
+        border-right: 2px solid #3a6785;
+        left: 1px;
+        top: 4px;
+      }
+
+      .icon-info2 {
+        width: 18px;
+        height: 18px;
+      }
+
+      .icon-info2:before {
+        width: 16px;
+        height: 16px;
+        left: 1px;
+        top: 1px;
+        border: 2px solid #3a6785;
+        border-radius: 50%;
+      }
+
+      .icon-info2:after {
+        width: 2px;
+        height: 2px;
+        left: 8px;
+        top: 5px;
+        background: #3a6785;
+        box-shadow: 0 4px 0 #3a6785, 0 7px 0 #3a6785;
+      }
+
+      .section { padding: 18px 20px 0; }
+
+      .heading {
+        font-size: 24px;
+        font-weight: 800;
+        color: #0c4b78;
+        margin: 0 0 18px;
+      }
+
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .stat-card {
+        background: rgba(255,255,255,0.76);
+        border: 1px solid rgba(13,79,120,0.12);
+        border-radius: 14px;
+        min-height: 103px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        box-shadow: 0 2px 0 rgba(13, 79, 120, 0.02);
+      }
+
+      .stat-card.total { background: rgba(197, 228, 244, 0.35); }
+      .stat-card.passed { background: rgba(214, 246, 226, 0.5); }
+      .stat-card.failed { background: rgba(247, 222, 225, 0.7); }
+      .stat-card.average { background: rgba(228, 220, 250, 0.5); }
+
+      .stat-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        position: relative;
+        background: rgba(255,255,255,0.5);
+      }
+
+      .stat-card.total .stat-icon { background: rgba(255,255,255,0.35); }
+
+      .stat-card.total .stat-icon:before {
+        width: 22px;
+        height: 18px;
+        border: 3px solid #3d6e8f;
+        border-radius: 5px 5px 3px 3px;
+        left: 15px;
+        top: 16px;
+        background: rgba(255,255,255,0.2);
+      }
+
+      .stat-card.total .stat-icon:after {
+        width: 18px;
+        height: 18px;
+        border: 3px solid #3d6e8f;
+        border-left: 0;
+        border-top: 0;
+        right: 14px;
+        bottom: 10px;
+        transform: skew(-20deg);
+      }
+
+      .stat-card.passed .stat-icon { background: rgba(255,255,255,0.4); }
+
+      .icon-check {
+        left: 12px;
+        top: 13px;
+        width: 24px;
+        height: 24px;
+      }
+
+      .icon-check:before {
+        width: 12px;
+        height: 6px;
+        border-left: 4px solid #28a145;
+        border-bottom: 4px solid #28a145;
+        transform: rotate(-45deg);
+        left: 7px;
+        top: 8px;
+      }
+
+      .stat-card.failed .stat-icon { background: rgba(255,255,255,0.4); }
+
+      .icon-cross {
+        left: 12px;
+        top: 13px;
+        width: 24px;
+        height: 24px;
+      }
+
+      .icon-cross:before, .icon-cross:after {
+        width: 4px;
+        height: 18px;
+        background: #d33d4a;
+        border-radius: 2px;
+        left: 10px;
+        top: 3px;
+      }
+
+      .icon-cross:before { transform: rotate(45deg); }
+      .icon-cross:after { transform: rotate(-45deg); }
+
+      .stat-card.average .stat-icon { background: rgba(255,255,255,0.45); }
+
+      .secure-stats .stat-value,
+      .secure-stats .stat-label,
+      .masked-grade,
+      .masked-remark {
+        filter: blur(5px);
+        user-select: none;
+        pointer-events: none;
+        opacity: 0.8;
+      }
+
+      .icon-star {
+        left: 11px;
+        top: 12px;
+        width: 30px;
+        height: 30px;
+      }
+
+      .icon-star:before {
+        width: 0;
+        height: 0;
+        left: 5px;
+        top: 1px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 18px solid #a46ff3;
+        transform: rotate(35deg);
+      }
+
+      .icon-star:after {
+        width: 0;
+        height: 0;
+        left: 7px;
+        top: 1px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 18px solid #a46ff3;
+        transform: rotate(-35deg);
+      }
+
+      .stat-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      .stat-label {
+        font-size: 12px;
+        color: #355d7d;
+        font-weight: 700;
+      }
+
+      .stat-value {
+        font-size: 18px;
+        font-weight: 800;
+        color: #193f62;
+      }
+
+      .passed .stat-value, .passed .stat-label { color: #1e7b3d; }
+      .failed .stat-value, .failed .stat-label { color: #b73e51; }
+      .average .stat-value { color: #7a52c8; }
+      .average .stat-label { color: #4d5ca7; }
+
+      .grade-table-wrap {
+        margin-top: 22px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(13,79,120,0.12);
+        background: rgba(255,255,255,0.45);
+      }
+
+      .roster-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 14px;
+      }
+
+      .roster-table thead th {
+        text-align: center;
+        background: linear-gradient(180deg, #0d5d99 0%, #0a4d82 100%);
+        color: #fff;
+        padding: 12px 10px;
+        font-weight: 700;
+        border-right: 1px solid rgba(255,255,255,0.2);
+      }
+
+      .roster-table thead th:first-child {
+        text-align: left;
+        padding-left: 14px;
+      }
+
+      .roster-table tbody td {
+        padding: 11px 10px;
+        color: #1f3b55;
+        text-align: center;
+        border-top: 1px solid rgba(13,79,120,0.1);
+        background: rgba(255,255,255,0.14);
+        border-right: 1px solid rgba(13,79,120,0.08);
+      }
+
+      .roster-table tbody td:first-child {
+        text-align: left;
+        padding-left: 14px;
+      }
+
+      .roster-table tbody tr:nth-child(even) td { background: rgba(155,183,204,0.05); }
+
+      .roster-table tbody tr[hidden] {
+        display: none;
+      }
+
+      .roster-table tbody td.name-cell {
+        text-align: left;
+        font-weight: 600;
+      }
+
+      .roster-table .masked {
+        filter: blur(5px);
+        user-select: none;
+        pointer-events: none;
+        opacity: 0.82;
+      }
+
+      .grade-pill {
+        display: inline-block;
+        background: rgba(89, 168, 105, 0.15);
+        color: #1c7a51;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: 6px 14px;
+        min-width: 74px;
+        text-align: center;
+      }
+
+      @media (max-width: 980px) {
+        .content { grid-template-columns: 1fr; }
+        .sidebar { min-height: auto; }
+        .student-card {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 18px;
+        }
+        .last-access { text-align: left; }
+      }
+
+      @media (max-width: 620px) {
+        .topbar { padding: 0 18px; height: 74px; }
+        .brand-text .title { font-size: 18px; }
+        .nav { gap: 10px; font-size: 11px; }
+        .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .tabs {
+          gap: 2px;
+          justify-content: flex-start;
+          overflow-x: auto;
+        }
+        .tab { min-width: 130px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page privacy-locked" id="page">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="brand-text">
+            <div class="title">STI College Ormoc</div>
+            <div class="subtitle">Student Grade Viewing Portal</div>
+          </div>
+        </div>
+
+        <nav class="nav" aria-label="Main navigation">
+          <div class="nav-item"><span>Learn</span> <span class="dot"></span></div>
+          <div class="nav-item"><span>Grow</span> <span class="dot"></span></div>
+          <div class="nav-item"><span>Build Your Future</span></div>
+        </nav>
+      </header>
+
+      <main class="content">
+        <aside class="sidebar">
+          <div class="welcome-box">
+            <div class="profile-mini">
+              <div class="avatar-small" aria-hidden="true"></div>
+            </div>
+
+            <h2>Welcome, Students!</h2>
+            <p>View your grades anytime, anywhere.</p>
+
+            <div class="input-group">
+              <label class="input-label" for="studentNumber">Enter Your Student Number</label>
+              <div class="field-wrap">
+                <span class="icon-user" aria-hidden="true"></span>
+                <input id="studentNumber" type="text" value="e.g. 2023-00123" aria-label="Student number" />
+              </div>
+
+              <button class="grade-btn" type="button" aria-label="View grades" id="viewGradesBtn">
+                <span><span class="icon-search" aria-hidden="true"></span> View Grades</span>
+              </button>
+
+              <div id="statusMessage" class="status-message" aria-live="polite"></div>
+
+              <div class="info-note">
+                <span class="icon-alert" aria-hidden="true"></span>
+                <span>Make sure to enter your correct student number.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-art" aria-hidden="true">
+            <div class="book"></div>
+            <div class="laptop">
+              <div class="laptop-screen"></div>
+              <div class="laptop-base"></div>
+            </div>
+            <div class="side-ink">your hard<br>pays off!</div>
+          </div>
+        </aside>
+
+        <section class="main-panel panel-locked" id="mainPanel">
+          <div class="student-card">
+            <div class="student-meta">
+              <div class="avatar-large" aria-hidden="true"></div>
+
+              <div class="student-text">
+                <h1 class="student-name" id="selectedStudentName">No student selected</h1>
+                <div class="student-details">
+                  <div><strong>Student Number:</strong> <span id="selectedStudentNumber">—</span></div>
+                  <div><strong>Program:</strong> ICT / IT</div>
+                  <div><strong>Year Level:</strong> <span id="selectedYearLevel">—</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="last-access">
+              <div class="slot"><span class="icon-cal" aria-hidden="true"></span> Last Accessed</div>
+              <div>Sep 25, 2026 02:12 PM</div>
+              <div class="secure-controls">
+                <button class="secure-toggle" type="button" id="toggleGrades">Show Grades</button>
+                <span class="secure-label">Confidential</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabs" aria-label="Section tabs">
+            <div class="tab is-active"><span class="icon-book"></span> Grades</div>
+            <div class="tab"><span class="icon-info2"></span> Student Information</div>
+          </div>
+
+          <div class="section">
+            <h2 class="heading">Academic Performance</h2>
+
+            <div class="stat-grid secure-stats">
+              <div class="stat-card total">
+                <div class="stat-icon" aria-hidden="true"></div>
+                <div class="stat-content">
+                  <div class="stat-label">Total Subjects</div>
+                  <div class="stat-value" id="totalSubjectsValue">—</div>
+                </div>
+              </div>
+
+              <div class="stat-card passed">
+                <div class="stat-icon"><span class="icon-check" aria-hidden="true"></span></div>
+                <div class="stat-content">
+                  <div class="stat-label">Passed</div>
+                  <div class="stat-value" id="passedValue">—</div>
+                </div>
+              </div>
+
+              <div class="stat-card failed">
+                <div class="stat-icon"><span class="icon-cross" aria-hidden="true"></span></div>
+                <div class="stat-content">
+                  <div class="stat-label">Failed</div>
+                  <div class="stat-value" id="failedValue">—</div>
+                </div>
+              </div>
+
+              <div class="stat-card average">
+                <div class="stat-icon"><span class="icon-star" aria-hidden="true"></span></div>
+                <div class="stat-content">
+                  <div class="stat-label">General Average</div>
+                  <div class="stat-value" id="averageValue">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grade-table-wrap">
+              <table class="roster-table" aria-label="Student grade roster">
+                <thead>
+                  <tr>
+                    <th style="width: 140px;">Student Number</th>
+                    <th style="width: 240px;">Student's Name by: Last Name</th>
+                    <th style="width: 100px;">Summative Test 1</th>
+                    <th style="width: 100px;">Summative Test 2</th>
+                    <th style="width: 100px;">Term Exam</th>
+                    <th style="width: 90px;">GRADE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2000483387</td>
+                    <td class="name-cell">Abing,Dwyn Lincoln Bentoy</td>
+                    <td><span class="masked">38</span></td>
+                    <td><span class="masked">23</span></td>
+                    <td><span class="masked">64</span></td>
+                    <td><span class="masked">94</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000494289</td>
+                    <td class="name-cell">Alvarez,Jeavin Codilla</td>
+                    <td><span class="masked">38</span></td>
+                    <td><span class="masked">20</span></td>
+                    <td><span class="masked">51</span></td>
+                    <td><span class="masked">92</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000504141</td>
+                    <td class="name-cell">Amatong,Abdul Muzil Macaraob</td>
+                    <td><span class="masked">19</span></td>
+                    <td><span class="masked">19</span></td>
+                    <td><span class="masked">0</span></td>
+                    <td><span class="masked">61</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000509616</td>
+                    <td class="name-cell">Ando,Khen Rhyle Bascon</td>
+                    <td><span class="masked">38</span></td>
+                    <td><span class="masked">27</span></td>
+                    <td><span class="masked">0</span></td>
+                    <td><span class="masked">90</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000480519</td>
+                    <td class="name-cell">Andoy,Lovely April Mangkal</td>
+                    <td><span class="masked">45</span></td>
+                    <td><span class="masked">18</span></td>
+                    <td><span class="masked">42</span></td>
+                    <td><span class="masked">92</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000499015</td>
+                    <td class="name-cell">Bernardino,Jhon Carl Romeo</td>
+                    <td><span class="masked">28</span></td>
+                    <td><span class="masked">13</span></td>
+                    <td><span class="masked">36</span></td>
+                    <td><span class="masked">90</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000506868</td>
+                    <td class="name-cell">Bulawan,Nethaniel Micayabas</td>
+                    <td><span class="masked">44</span></td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">53</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000499105</td>
+                    <td class="name-cell">Cabuag,Fhinky Patricio</td>
+                    <td><span class="masked">28</span></td>
+                    <td><span class="masked">29</span></td>
+                    <td><span class="masked">66</span></td>
+                    <td><span class="masked">94</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000496329</td>
+                    <td class="name-cell">Cadiz,Marco Antig</td>
+                    <td><span class="masked">51</span></td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">67</span></td>
+                    <td><span class="masked">95</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000503829</td>
+                    <td class="name-cell">Cagbacb,James Kane Tuazon</td>
+                    <td><span class="masked">48</span></td>
+                    <td><span class="masked">17</span></td>
+                    <td><span class="masked">53</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000484142</td>
+                    <td class="name-cell">Cantiga,Jewon Arguilano</td>
+                    <td><span class="masked">23</span></td>
+                    <td><span class="masked">19</span></td>
+                    <td><span class="masked">74</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000479925</td>
+                    <td class="name-cell">Cardama,Princess Mae Cartagena</td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">20</span></td>
+                    <td><span class="masked">59</span></td>
+                    <td><span class="masked">92</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000479540</td>
+                    <td class="name-cell">Casunggay,Loraine Fatima Codilla</td>
+                    <td><span class="masked">29</span></td>
+                    <td><span class="masked">28</span></td>
+                    <td><span class="masked">55</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000480092</td>
+                    <td class="name-cell">Cayanog,Eric Triso Ar</td>
+                    <td><span class="masked">47</span></td>
+                    <td><span class="masked">24</span></td>
+                    <td><span class="masked">66</span></td>
+                    <td><span class="masked">95</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000488739</td>
+                    <td class="name-cell">Cinco,Kyle Paula Mae Maciar</td>
+                    <td><span class="masked">36</span></td>
+                    <td><span class="masked">29</span></td>
+                    <td><span class="masked">67</span></td>
+                    <td><span class="masked">95</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000486749</td>
+                    <td class="name-cell">De Leon,Rhea Demetrial</td>
+                    <td><span class="masked">28</span></td>
+                    <td><span class="masked">26</span></td>
+                    <td><span class="masked">55</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000496330</td>
+                    <td class="name-cell">Degamo,Cedrick Lorejas</td>
+                    <td><span class="masked">53</span></td>
+                    <td><span class="masked">23</span></td>
+                    <td><span class="masked">82</span></td>
+                    <td><span class="masked">96</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000500199</td>
+                    <td class="name-cell">Dumaran,John Loyd Loporada</td>
+                    <td><span class="masked">27</span></td>
+                    <td><span class="masked">21</span></td>
+                    <td><span class="masked">31</span></td>
+                    <td><span class="masked">90</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000502677</td>
+                    <td class="name-cell">Enrera,Kevin Sacay</td>
+                    <td><span class="masked">38</span></td>
+                    <td><span class="masked">24</span></td>
+                    <td><span class="masked">67</span></td>
+                    <td><span class="masked">94</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000481783</td>
+                    <td class="name-cell">Fernandes,Grace Angelin Miranda</td>
+                    <td><span class="masked">30</span></td>
+                    <td><span class="masked">24</span></td>
+                    <td><span class="masked">58</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000493318</td>
+                    <td class="name-cell">Garciao,Sheown Cedrick Macol</td>
+                    <td><span class="masked">36</span></td>
+                    <td><span class="masked">18</span></td>
+                    <td><span class="masked">63</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000482882</td>
+                    <td class="name-cell">Genobiagon,Raye Dominico Daisog</td>
+                    <td><span class="masked">18</span></td>
+                    <td><span class="masked">6</span></td>
+                    <td><span class="masked">26</span></td>
+                    <td><span class="masked">75</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000480445</td>
+                    <td class="name-cell">Landero,Eljie Cliff Cape</td>
+                    <td><span class="masked">44</span></td>
+                    <td><span class="masked">38</span></td>
+                    <td><span class="masked">80</span></td>
+                    <td><span class="masked">98</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000484135</td>
+                    <td class="name-cell">Lastra,Kurth Genesis Martinito</td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">26</span></td>
+                    <td><span class="masked">42</span></td>
+                    <td><span class="masked">91</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000486021</td>
+                    <td class="name-cell">Llano,John Carl Tilag</td>
+                    <td><span class="masked">19</span></td>
+                    <td><span class="masked">16</span></td>
+                    <td><span class="masked">57</span></td>
+                    <td><span class="masked">91</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000498141</td>
+                    <td class="name-cell">Mamintal,Abenal Cabatuan</td>
+                    <td><span class="masked">17</span></td>
+                    <td><span class="masked">18</span></td>
+                    <td><span class="masked">55</span></td>
+                    <td><span class="masked">78</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000482045</td>
+                    <td class="name-cell">Martinez,Axel Jarred Arradaza</td>
+                    <td><span class="masked">48</span></td>
+                    <td><span class="masked">24</span></td>
+                    <td><span class="masked">86</span></td>
+                    <td><span class="masked">96</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000491881</td>
+                    <td class="name-cell">Merelos,Joachim Jiao Yuson</td>
+                    <td><span class="masked">33</span></td>
+                    <td><span class="masked">15</span></td>
+                    <td><span class="masked">32</span></td>
+                    <td><span class="masked">90</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000501253</td>
+                    <td class="name-cell">Nazario,Princess Alyssa Jupia</td>
+                    <td><span class="masked">41</span></td>
+                    <td><span class="masked">35</span></td>
+                    <td><span class="masked">83</span></td>
+                    <td><span class="masked">97</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000481646</td>
+                    <td class="name-cell">Ocampo,Erik James Mendoza</td>
+                    <td><span class="masked">38</span></td>
+                    <td><span class="masked">24</span></td>
+                    <td><span class="masked">89</span></td>
+                    <td><span class="masked">94</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000496836</td>
+                    <td class="name-cell">Paylado,Michael Blake Jumao-As</td>
+                    <td><span class="masked">26</span></td>
+                    <td><span class="masked">25</span></td>
+                    <td><span class="masked">71</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000492137</td>
+                    <td class="name-cell">Reyes,Shinoe Jamie Daguil</td>
+                    <td><span class="masked">5</span></td>
+                    <td><span class="masked">11</span></td>
+                    <td><span class="masked">27</span></td>
+                    <td><span class="masked">87</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000484115</td>
+                    <td class="name-cell">Rosal,Twylia Venice Navarro</td>
+                    <td><span class="masked">41</span></td>
+                    <td><span class="masked">37</span></td>
+                    <td><span class="masked">66</span></td>
+                    <td><span class="masked">96</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000491104</td>
+                    <td class="name-cell">Sabenorio,Carl Andrei Abrio</td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">14</span></td>
+                    <td><span class="masked">36</span></td>
+                    <td><span class="masked">89</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000500286</td>
+                    <td class="name-cell">Salvo,Nina Gabrielle Singahan</td>
+                    <td><span class="masked">44</span></td>
+                    <td><span class="masked">25</span></td>
+                    <td><span class="masked">71</span></td>
+                    <td><span class="masked">95</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000499553</td>
+                    <td class="name-cell">Villa,Ethan Diaz</td>
+                    <td><span class="masked">52</span></td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">87</span></td>
+                    <td><span class="masked">96</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000493400</td>
+                    <td class="name-cell">Villar,Nate Ulrik Delos Santos</td>
+                    <td><span class="masked">39</span></td>
+                    <td><span class="masked">36</span></td>
+                    <td><span class="masked">87</span></td>
+                    <td><span class="masked">97</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener('contextmenu', (event) => {
+        event.preventDefault();
+      });
+
+      const inputEl = document.getElementById('studentNumber');
+      const statusMessage = document.getElementById('statusMessage');
+      const viewGradesBtn = document.getElementById('viewGradesBtn');
+      const mainPanel = document.getElementById('mainPanel');
+      const page = document.getElementById('page');
+      const toggleBtn = document.getElementById('toggleGrades');
+      const maskedRows = document.querySelectorAll('.masked, .masked-grade, .masked-remark');
+      const statValues = document.querySelectorAll('.secure-stats .stat-value');
+      const rosterRows = Array.from(document.querySelectorAll('.roster-table tbody tr'));
+      const selectedStudentName = document.getElementById('selectedStudentName');
+      const selectedStudentNumber = document.getElementById('selectedStudentNumber');
+      const totalSubjectsValue = document.getElementById('totalSubjectsValue');
+      const passedValue = document.getElementById('passedValue');
+      const failedValue = document.getElementById('failedValue');
+      const averageValue = document.getElementById('averageValue');
+
+      inputEl.addEventListener('focus', () => {
+        if (inputEl.value === 'e.g. 2023-00123') inputEl.value = '';
+      });
+
+      inputEl.addEventListener('blur', () => {
+        if (!inputEl.value.trim()) inputEl.value = 'e.g. 2023-00123';
+      });
+
+      function unlockPanel() {
+        page.classList.remove('privacy-locked');
+        mainPanel.classList.remove('panel-locked');
+      }
+
+      function lockPanel() {
+        page.classList.add('privacy-locked');
+        mainPanel.classList.add('panel-locked');
+        rosterRows.forEach((row) => {
+          row.hidden = true;
+        });
+      }
+
+      function clearStatus() {
+        statusMessage.textContent = '';
+        statusMessage.classList.remove('success');
+      }
+
+      function showStatus(message, success = false) {
+        statusMessage.textContent = message;
+        statusMessage.classList.toggle('success', success);
+      }
+
+      function showStudent(studentRow) {
+        rosterRows.forEach((row) => {
+          row.hidden = row !== studentRow;
+        });
+
+        const cells = studentRow.querySelectorAll('td');
+        const studentNumber = cells[0].textContent.trim();
+        const studentName = cells[1].textContent.trim();
+        const grade = Number(cells[5].textContent.trim());
+        const passed = grade >= 75;
+
+        selectedStudentNumber.textContent = studentNumber;
+        selectedStudentName.textContent = studentName;
+        totalSubjectsValue.textContent = '1';
+        passedValue.textContent = passed ? '1' : '0';
+        failedValue.textContent = passed ? '0' : '1';
+        averageValue.textContent = `${grade}%`;
+      }
+
+      viewGradesBtn.addEventListener('click', () => {
+        const entered = inputEl.value.trim();
+
+        if (!entered || entered === 'e.g. 2023-00123') {
+          showStatus('Please enter a valid student number.');
+          lockPanel();
+          return;
+        }
+
+        const matchingRow = rosterRows.find((row) => {
+          const rowStudentNumber = row.querySelector('td')?.textContent.trim();
+          return rowStudentNumber === entered;
+        });
+
+        if (matchingRow) {
+          showStudent(matchingRow);
+          unlockPanel();
+          showStatus('Access granted. Only this student’s information is visible.', true);
+          setTimeout(() => clearStatus(), 2200);
+        } else {
+          lockPanel();
+          showStatus('Incorrect student number. Access denied.');
+        }
+      });
+
+      lockPanel();
+
+      toggleBtn.addEventListener('click', () => {
+        if (mainPanel.classList.contains('panel-locked')) {
+          showStatus('Unlock the student portal using a valid student number first.');
+          return;
+        }
+
+        const show = toggleBtn.textContent.trim() === 'Show Grades';
+
+        maskedRows.forEach((el) => {
+          el.style.filter = show ? 'none' : 'blur(5px)';
+          el.style.opacity = show ? '1' : '0.8';
+          el.style.pointerEvents = show ? 'auto' : 'none';
+          el.style.userSelect = show ? 'text' : 'none';
+        });
+
+        statValues.forEach((el) => {
+          el.style.filter = show ? 'none' : 'blur(5px)';
+          el.style.opacity = show ? '1' : '0.8';
+        });
+
+        toggleBtn.textContent = show ? 'Hide Grades' : 'Show Grades';
+      });
+    </script>
+  </body>
+</html>
