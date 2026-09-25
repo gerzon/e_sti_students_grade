@@ -708,6 +708,47 @@
         margin: 0 0 18px;
       }
 
+      .subject-label {
+        margin: 0 0 18px;
+        color: #4b667a;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .subject-tabs {
+        display: flex;
+        gap: 8px;
+        margin: -8px 0 20px;
+        border-bottom: 1px solid rgba(13,79,120,0.14);
+        overflow-x: auto;
+      }
+
+      .subject-tab {
+        border: 0;
+        border-bottom: 3px solid transparent;
+        background: transparent;
+        color: #4b667a;
+        cursor: pointer;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 11px 14px 10px;
+        white-space: nowrap;
+      }
+
+      .subject-tab:hover,
+      .subject-tab.is-active {
+        color: #0c4b78;
+      }
+
+      .subject-tab.is-active {
+        border-bottom-color: #0d5d99;
+      }
+
+      .subject-panel[hidden] {
+        display: none;
+      }
+
       .stat-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1142,8 +1183,13 @@
 
           <div class="section">
             <h2 class="heading">Academic Performance</h2>
+            <div class="subject-tabs" role="tablist" aria-label="Subjects">
+              <button class="subject-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="javaPanel" id="javaTab" data-subject="java">Computer Programming 1 (Java)</button>
+              <button class="subject-tab" type="button" role="tab" aria-selected="false" aria-controls="csharpPanel" id="csharpTab" data-subject="csharp">Computer Programming 4 (C Sharp)</button>
+              <button class="subject-tab" type="button" role="tab" aria-selected="false" aria-controls="javascriptPanel" id="javascriptTab" data-subject="javascript">Computer Programming 5 (JavaScript)</button>
+            </div>
 
-            <div class="stat-grid secure-stats">
+          <div class="stat-grid secure-stats">
               <div class="stat-card total">
                 <div class="stat-icon" aria-hidden="true"></div>
                 <div class="stat-content">
@@ -1177,6 +1223,7 @@
               </div>
             </div>
 
+            <div class="subject-panel" id="javaPanel" role="tabpanel" aria-labelledby="javaTab">
             <div class="grade-table-wrap">
               <table class="roster-table" aria-label="Student grade roster">
                 <thead>
@@ -1248,7 +1295,7 @@
                   </tr>
                   <tr>
                     <td>2000499105</td>
-                    <td class="name-cell">Cabuag,Fhinky Patricio</td>
+                    <td class="name-cell">Cabahug,Fhinky Patricio</td>
                     <td><span class="masked">28</span></td>
                     <td><span class="masked">29</span></td>
                     <td><span class="masked">66</span></td>
@@ -1489,6 +1536,198 @@
                 </tbody>
               </table>
             </div>
+
+            </div>
+            <div class="subject-panel" id="csharpPanel" role="tabpanel" aria-labelledby="csharpTab" hidden>
+            <div class="grade-table-wrap">
+              <table class="roster-table" aria-label="Computer Programming 4 (C Sharp) student grade roster">
+                <thead>
+                  <tr>
+                    <th style="width: 140px;">Student Number</th>
+                    <th style="width: 240px;">Student's Name by: Last Name</th>
+                    <th style="width: 100px;">Summative Test 1</th>
+                    <th style="width: 100px;">Summative Test 2</th>
+                    <th style="width: 100px;">Term Exam</th>
+                    <th style="width: 90px;">GRADE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2000465963</td>
+                    <td class="name-cell">Balane,Keith Arljohn Abellar</td>
+                    <td><span class="masked">18</span></td>
+                    <td><span class="masked">12</span></td>
+                    <td><span class="masked">37</span></td>
+                    <td><span class="masked">77</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000445293</td>
+                    <td class="name-cell">Cadeliña,Ryod Edric Miñoza</td>
+                    <td><span class="masked">16</span></td>
+                    <td><span class="masked">21</span></td>
+                    <td><span class="masked">40</span></td>
+                    <td><span class="masked">78</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000473713</td>
+                    <td class="name-cell">Capala,Vincent Josh</td>
+                    <td><span class="masked">9</span></td>
+                    <td><span class="masked">17</span></td>
+                    <td><span class="masked">40</span></td>
+                    <td><span class="masked">75</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000444662</td>
+                    <td class="name-cell">Dolores,Quinn Agustine Espelita</td>
+                    <td><span class="masked">25</span></td>
+                    <td><span class="masked">10</span></td>
+                    <td><span class="masked">32</span></td>
+                    <td><span class="masked">75</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000472946</td>
+                    <td class="name-cell">Elizalde,Isidrick Isales</td>
+                    <td><span class="masked">26</span></td>
+                    <td><span class="masked">12</span></td>
+                    <td><span class="masked">43</span></td>
+                    <td><span class="masked">75</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000456375</td>
+                    <td class="name-cell">Fiel,Julianna Marie Pepito</td>
+                    <td><span class="masked">23</span></td>
+                    <td><span class="masked">14</span></td>
+                    <td><span class="masked">49</span></td>
+                    <td><span class="masked">87</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000448832</td>
+                    <td class="name-cell">Gariando,John Joseph Anoos</td>
+                    <td><span class="masked">35</span></td>
+                    <td><span class="masked">26</span></td>
+                    <td><span class="masked">52</span></td>
+                    <td><span class="masked">90</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000465902</td>
+                    <td class="name-cell">Genovisa,Ace Miguel Alcazar</td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">12</span></td>
+                    <td><span class="masked">35</span></td>
+                    <td><span class="masked">78</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000446881</td>
+                    <td class="name-cell">Gordo,Julian Theodore Bartido</td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">13</span></td>
+                    <td><span class="masked">43</span></td>
+                    <td><span class="masked">86</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000456376</td>
+                    <td class="name-cell">Grabillo,Emily Rose Cañete</td>
+                    <td><span class="masked">29</span></td>
+                    <td><span class="masked">19</span></td>
+                    <td><span class="masked">31</span></td>
+                    <td><span class="masked">85</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000455879</td>
+                    <td class="name-cell">Juanillo,Benjamin Almacin</td>
+                    <td><span class="masked">32</span></td>
+                    <td><span class="masked">14</span></td>
+                    <td><span class="masked">56</span></td>
+                    <td><span class="masked">90</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000452919</td>
+                    <td class="name-cell">Loberano,Denmark Cortolla</td>
+                    <td><span class="masked">30</span></td>
+                    <td><span class="masked">17</span></td>
+                    <td><span class="masked">50</span></td>
+                    <td><span class="masked">87</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000447976</td>
+                    <td class="name-cell">Noel,Niño Tumamak</td>
+                    <td><span class="masked">25</span></td>
+                    <td><span class="masked">9</span></td>
+                    <td><span class="masked">0</span></td>
+                    <td><span class="masked">75</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000453911</td>
+                    <td class="name-cell">Pasaol,Jhun Kenneth Espina</td>
+                    <td><span class="masked">30</span></td>
+                    <td><span class="masked">25</span></td>
+                    <td><span class="masked">58</span></td>
+                    <td><span class="masked">90</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000458873</td>
+                    <td class="name-cell">Rañua,Louree Mae Orosio</td>
+                    <td><span class="masked">15</span></td>
+                    <td><span class="masked">11</span></td>
+                    <td><span class="masked">25</span></td>
+                    <td><span class="masked">82</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000459400</td>
+                    <td class="name-cell">Ronario,Ian Joel Villarias</td>
+                    <td><span class="masked">45</span></td>
+                    <td><span class="masked">22</span></td>
+                    <td><span class="masked">68</span></td>
+                    <td><span class="masked">93</span></td>
+                  </tr>
+                  <tr>
+                    <td>2000439432</td>
+                    <td class="name-cell">Sumeguin,Nikki Nicole Lom-Oc</td>
+                    <td><span class="masked">39</span></td>
+                    <td><span class="masked">26</span></td>
+                    <td><span class="masked">62</span></td>
+                    <td><span class="masked">91</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+
+            <div class="subject-panel" id="javascriptPanel" role="tabpanel" aria-labelledby="javascriptTab" hidden>
+              <div class="grade-table-wrap">
+                <table class="roster-table" aria-label="Computer Programming 5 (JavaScript) student grade roster">
+                  <thead>
+                    <tr>
+                      <th style="width: 140px;">Student Number</th>
+                      <th style="width: 240px;">Student's Name by: Last Name</th>
+                      <th style="width: 100px;">Summative Test 1</th>
+                      <th style="width: 100px;">Summative Test 2</th>
+                      <th style="width: 100px;">Term Exam</th>
+                      <th style="width: 90px;">GRADE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>2000465963</td><td class="name-cell">Balane,Keith Arljohn Abellar</td><td><span class="masked">35</span></td><td><span class="masked">9</span></td><td><span class="masked">29</span></td><td><span class="masked">76</span></td></tr>
+                    <tr><td>2000445293</td><td class="name-cell">Cadeliña,Ryod Edric Miñoza</td><td><span class="masked">23</span></td><td><span class="masked">9</span></td><td><span class="masked">23</span></td><td><span class="masked">75</span></td></tr>
+                    <tr><td>2000473713</td><td class="name-cell">Capala,Vincent Josh</td><td><span class="masked">44</span></td><td><span class="masked">24</span></td><td><span class="masked">20</span></td><td><span class="masked">75</span></td></tr>
+                    <tr><td>2000444662</td><td class="name-cell">Dolores,Quinn Agustine Espelita</td><td><span class="masked">27</span></td><td><span class="masked">14</span></td><td><span class="masked">29</span></td><td><span class="masked">75</span></td></tr>
+                    <tr><td>2000472946</td><td class="name-cell">Elizalde,Isidrick Isales</td><td><span class="masked">43</span></td><td><span class="masked">13</span></td><td><span class="masked">27</span></td><td><span class="masked">75</span></td></tr>
+                    <tr><td>2000456375</td><td class="name-cell">Fiel,Julianna Marie Pepito</td><td><span class="masked">36</span></td><td><span class="masked">14</span></td><td><span class="masked">49</span></td><td><span class="masked">88</span></td></tr>
+                    <tr><td>2000448832</td><td class="name-cell">Gariando,John Joseph Anoos</td><td><span class="masked">37</span></td><td><span class="masked">21</span></td><td><span class="masked">58</span></td><td><span class="masked">91</span></td></tr>
+                    <tr><td>2000465902</td><td class="name-cell">Genovisa,Ace Miguel Alcazar</td><td><span class="masked">37</span></td><td><span class="masked">14</span></td><td><span class="masked">35</span></td><td><span class="masked">79</span></td></tr>
+                    <tr><td>2000446881</td><td class="name-cell">Gordo,Julian Theodore Bartido</td><td><span class="masked">26</span></td><td><span class="masked">10</span></td><td><span class="masked">56</span></td><td><span class="masked">88</span></td></tr>
+                    <tr><td>2000456376</td><td class="name-cell">Grabillo,Emily Rose Cañete</td><td><span class="masked">31</span></td><td><span class="masked">14</span></td><td><span class="masked">39</span></td><td><span class="masked">86</span></td></tr>
+                    <tr><td>2000455879</td><td class="name-cell">Juanillo,Benjamin Almacin</td><td><span class="masked">36</span></td><td><span class="masked">27</span></td><td><span class="masked">67</span></td><td><span class="masked">92</span></td></tr>
+                    <tr><td>2000452919</td><td class="name-cell">Loberano,Denmark Cortolla</td><td><span class="masked">39</span></td><td><span class="masked">30</span></td><td><span class="masked">50</span></td><td><span class="masked">89</span></td></tr>
+                    <tr><td>2000447976</td><td class="name-cell">Noel,Niño Tumamak</td><td><span class="masked">30</span></td><td><span class="masked">18</span></td><td><span class="masked">35</span></td><td><span class="masked">78</span></td></tr>
+                    <tr><td>2000453911</td><td class="name-cell">Pasaol,Jhun Kenneth Espina</td><td><span class="masked">31</span></td><td><span class="masked">21</span></td><td><span class="masked">50</span></td><td><span class="masked">88</span></td></tr>
+                    <tr><td>2000458873</td><td class="name-cell">Rañua,Louree Mae Orosio</td><td><span class="masked">34</span></td><td><span class="masked">10</span></td><td><span class="masked">36</span></td><td><span class="masked">85</span></td></tr>
+                    <tr><td>2000459400</td><td class="name-cell">Ronario,Ian Joel Villarias</td><td><span class="masked">44</span></td><td><span class="masked">29</span></td><td><span class="masked">69</span></td><td><span class="masked">93</span></td></tr>
+                    <tr><td>2000439432</td><td class="name-cell">Sumeguin,Nikki Nicole Lom-Oc</td><td><span class="masked">38</span></td><td><span class="masked">28</span></td><td><span class="masked">56</span></td><td><span class="masked">90</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -1514,6 +1753,8 @@
       const passedValue = document.getElementById('passedValue');
       const failedValue = document.getElementById('failedValue');
       const averageValue = document.getElementById('averageValue');
+      const subjectTabs = Array.from(document.querySelectorAll('.subject-tab'));
+      const subjectPanels = Array.from(document.querySelectorAll('.subject-panel'));
 
       inputEl.addEventListener('focus', () => {
         if (inputEl.value === 'e.g. 2023-00123') inputEl.value = '';
@@ -1565,6 +1806,18 @@
         averageValue.textContent = `${grade}%`;
       }
 
+      function setActiveSubject(subject) {
+        subjectTabs.forEach((subjectTab) => {
+          const isActive = subjectTab.dataset.subject === subject;
+          subjectTab.classList.toggle('is-active', isActive);
+          subjectTab.setAttribute('aria-selected', String(isActive));
+        });
+
+        subjectPanels.forEach((panel) => {
+          panel.hidden = panel.id !== `${subject}Panel`;
+        });
+      }
+
       viewGradesBtn.addEventListener('click', () => {
         const entered = inputEl.value.trim();
 
@@ -1574,12 +1827,18 @@
           return;
         }
 
-        const matchingRow = rosterRows.find((row) => {
+        const matchingPanel = subjectPanels.find((panel) => {
+          return Array.from(panel.querySelectorAll('tbody tr')).some((row) => {
+            return row.querySelector('td')?.textContent.trim() === entered;
+          });
+        });
+        const matchingRow = matchingPanel && Array.from(matchingPanel.querySelectorAll('tbody tr')).find((row) => {
           const rowStudentNumber = row.querySelector('td')?.textContent.trim();
           return rowStudentNumber === entered;
         });
 
         if (matchingRow) {
+          setActiveSubject(matchingPanel.id.replace('Panel', ''));
           showStudent(matchingRow);
           unlockPanel();
           showStatus('Access granted. Only this student’s information is visible.', true);
@@ -1588,6 +1847,26 @@
           lockPanel();
           showStatus('Incorrect student number. Access denied.');
         }
+      });
+
+      subjectTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          const selectedSubject = tab.dataset.subject;
+          setActiveSubject(selectedSubject);
+
+          if (!mainPanel.classList.contains('panel-locked')) {
+            const activePanel = subjectPanels.find((panel) => !panel.hidden);
+            const selectedRow = Array.from(activePanel.querySelectorAll('tbody tr')).find((row) => {
+              return row.querySelector('td')?.textContent.trim() === selectedStudentNumber.textContent;
+            });
+
+            rosterRows.forEach((row) => {
+              row.hidden = row !== selectedRow;
+            });
+
+            if (selectedRow) showStudent(selectedRow);
+          }
+        });
       });
 
       lockPanel();
