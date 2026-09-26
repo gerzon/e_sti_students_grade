@@ -723,6 +723,35 @@
         overflow-x: auto;
       }
 
+      .subject-tabs[hidden] {
+        display: none;
+      }
+
+      .level-switcher {
+        display: flex;
+        gap: 8px;
+        margin: -8px 0 16px;
+      }
+
+      .level-button {
+        border: 1px solid rgba(13,79,120,0.18);
+        border-radius: 999px;
+        background: rgba(255,255,255,0.72);
+        color: #4b667a;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        padding: 8px 16px;
+      }
+
+      .level-button:hover,
+      .level-button.is-active {
+        border-color: #0d5d99;
+        background: #0d5d99;
+        color: #fff;
+      }
+
       .subject-tab {
         border: 0;
         border-bottom: 3px solid transparent;
@@ -1183,10 +1212,18 @@
 
           <div class="section">
             <h2 class="heading">Academic Performance</h2>
-            <div class="subject-tabs" role="tablist" aria-label="Subjects">
+            <div class="level-switcher" aria-label="Grade level">
+              <button class="level-button is-active" type="button" aria-pressed="true" data-level="secondary">Secondary</button>
+              <button class="level-button" type="button" aria-pressed="false" data-level="tertiary">Tertiary</button>
+            </div>
+
+            <div class="subject-tabs" id="secondarySubjects" role="tablist" aria-label="Secondary subjects">
               <button class="subject-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="javaPanel" id="javaTab" data-subject="java">Computer Programming 1 (Java)</button>
               <button class="subject-tab" type="button" role="tab" aria-selected="false" aria-controls="csharpPanel" id="csharpTab" data-subject="csharp">Computer Programming 4 (C Sharp)</button>
               <button class="subject-tab" type="button" role="tab" aria-selected="false" aria-controls="javascriptPanel" id="javascriptTab" data-subject="javascript">Computer Programming 5 (JavaScript)</button>
+            </div>
+            <div class="subject-tabs" id="tertiarySubjects" role="tablist" aria-label="Tertiary subjects" hidden>
+              <button class="subject-tab" type="button" role="tab" aria-selected="false" aria-controls="eventDrivenPanel" id="eventDrivenTab" data-subject="eventDriven">Event-driven Programming</button>
             </div>
 
           <div class="stat-grid secure-stats">
@@ -1223,7 +1260,7 @@
               </div>
             </div>
 
-            <div class="subject-panel" id="javaPanel" role="tabpanel" aria-labelledby="javaTab">
+            <div class="subject-panel" id="javaPanel" role="tabpanel" aria-labelledby="javaTab" data-level="secondary">
             <div class="grade-table-wrap">
               <table class="roster-table" aria-label="Student grade roster">
                 <thead>
@@ -1538,7 +1575,7 @@
             </div>
 
             </div>
-            <div class="subject-panel" id="csharpPanel" role="tabpanel" aria-labelledby="csharpTab" hidden>
+            <div class="subject-panel" id="csharpPanel" role="tabpanel" aria-labelledby="csharpTab" data-level="secondary" hidden>
             <div class="grade-table-wrap">
               <table class="roster-table" aria-label="Computer Programming 4 (C Sharp) student grade roster">
                 <thead>
@@ -1693,7 +1730,7 @@
             </div>
             </div>
 
-            <div class="subject-panel" id="javascriptPanel" role="tabpanel" aria-labelledby="javascriptTab" hidden>
+            <div class="subject-panel" id="javascriptPanel" role="tabpanel" aria-labelledby="javascriptTab" data-level="secondary" hidden>
               <div class="grade-table-wrap">
                 <table class="roster-table" aria-label="Computer Programming 5 (JavaScript) student grade roster">
                   <thead>
@@ -1728,6 +1765,61 @@
                 </table>
               </div>
             </div>
+
+            <div class="subject-panel" id="eventDrivenPanel" role="tabpanel" aria-labelledby="eventDrivenTab" data-level="tertiary" hidden>
+              <div class="grade-table-wrap">
+                <table class="roster-table" aria-label="Event-driven Programming tertiary student grade roster">
+                  <thead>
+                    <tr>
+                      <th style="width: 140px;">Student Number</th>
+                      <th style="width: 240px;">Student Name</th>
+                      <th style="width: 100px;">Term Exam</th>
+                      <th style="width: 90px;">Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>2000291827</td><td class="name-cell">ANO-OS,CHEENE ORCULLO</td><td><span class="masked">58</span></td><td><span class="masked">83.93</span></td></tr>
+                    <tr><td>2000407854</td><td class="name-cell">AQUINO,KENNETH AMIEL ROBLES</td><td><span class="masked">42</span></td><td><span class="masked">50.00</span></td></tr>
+                    <tr><td>2000401382</td><td class="name-cell">BAFLOR,ANGEL ROSE SILVANO</td><td><span class="masked">36</span></td><td><span class="masked">45.71</span></td></tr>
+                    <tr><td>2000410478</td><td class="name-cell">BARANGAN,SANDY ORONG</td><td><span class="masked">52</span></td><td><span class="masked">79.64</span></td></tr>
+                    <tr><td>2000399584</td><td class="name-cell">CABAÑERO,JOHN CLEO VALEROSO</td><td><span class="masked">46</span></td><td><span class="masked">82.86</span></td></tr>
+                    <tr><td>2000409083</td><td class="name-cell">CAMALING,RANDEL ROSALES</td><td><span class="masked">46</span></td><td><span class="masked">50.86</span></td></tr>
+                    <tr><td>2000430151</td><td class="name-cell">CANTIGA,CHIN MORCIA</td><td><span class="masked">38</span></td><td><span class="masked">69.64</span></td></tr>
+                    <tr><td>2000426747</td><td class="name-cell">CAPAROS,JOHN PAUL MORENO</td><td><span class="masked">54</span></td><td><span class="masked">58.57</span></td></tr>
+                    <tr><td>2000301397</td><td class="name-cell">CAPE,JUSTINE CORNELIO</td><td><span class="masked">54</span></td><td><span class="masked">88.57</span></td></tr>
+                    <tr><td>2000422797</td><td class="name-cell">CAPUA,FRANZ JOSEF MANATAD</td><td><span class="masked">52</span></td><td><span class="masked">59.64</span></td></tr>
+                    <tr><td>2000400733</td><td class="name-cell">DAFFON,JOHN PATRICK SANCHEZ</td><td><span class="masked">52</span></td><td><span class="masked">87.14</span></td></tr>
+                    <tr><td>2000283189</td><td class="name-cell">EBCAS,JEZRELL RAY PAREJA</td><td><span class="masked">64</span></td><td><span class="masked">95.71</span></td></tr>
+                    <tr><td>2000408075</td><td class="name-cell">ELLIOT,THEA RYS OLOVERIO</td><td><span class="masked">50</span></td><td><span class="masked">73.71</span></td></tr>
+                    <tr><td>2000411903</td><td class="name-cell">ESTRELLER,MARK DANIEL</td><td><span class="masked">0</span></td><td><span class="masked">38.00</span></td></tr>
+                    <tr><td>2000420124</td><td class="name-cell">FLORITO,JURIS PRINCES PEPITO</td><td><span class="masked">60</span></td><td><span class="masked">92.86</span></td></tr>
+                    <tr><td>2000255920</td><td class="name-cell">GARCIANO,JUDE MARTIN VALENCIA</td><td><span class="masked">56</span></td><td><span class="masked">90.00</span></td></tr>
+                    <tr><td>2000507869</td><td class="name-cell">GATOC,EMMANUEL ANDREI MORANTE</td><td><span class="masked">0</span></td><td><span class="masked">0.00</span></td></tr>
+                    <tr><td>2000356478</td><td class="name-cell">ISENHOUR,PHILIP JULIAN</td><td><span class="masked">24</span></td><td><span class="masked">37.14</span></td></tr>
+                    <tr><td>2000306844</td><td class="name-cell">JAYME,JOHEN GEOFF TIU</td><td><span class="masked">32</span></td><td><span class="masked">42.86</span></td></tr>
+                    <tr><td>2000361710</td><td class="name-cell">JUDILLA,CZAR AIAN LASOTA</td><td><span class="masked">0</span></td><td><span class="masked">42.50</span></td></tr>
+                    <tr><td>2000400213</td><td class="name-cell">JULARBAL,BREAN JADE LLANOS</td><td><span class="masked">44</span></td><td><span class="masked">81.43</span></td></tr>
+                    <tr><td>2000389593</td><td class="name-cell">LOPEZ,JOHN REY CASTILLO</td><td><span class="masked">50</span></td><td><span class="masked">73.71</span></td></tr>
+                    <tr><td>2000304737</td><td class="name-cell">MAGLASANG,ENRIQUE MIGUEL BERMEJO</td><td><span class="masked">42</span></td><td><span class="masked">50.00</span></td></tr>
+                    <tr><td>2000286222</td><td class="name-cell">MANILAG,KURTJOHN SANICO</td><td><span class="masked">40</span></td><td><span class="masked">71.07</span></td></tr>
+                    <tr><td>2000285630</td><td class="name-cell">MARTIN,MARIE ANGELI SALAZAR</td><td><span class="masked">60</span></td><td><span class="masked">85.36</span></td></tr>
+                    <tr><td>2000397788</td><td class="name-cell">MASCUÑANA,BRENT PACABIS</td><td><span class="masked">50</span></td><td><span class="masked">78.21</span></td></tr>
+                    <tr><td>2000416155</td><td class="name-cell">MENDOZA,CYNTHIA ANDO</td><td><span class="masked">38</span></td><td><span class="masked">69.64</span></td></tr>
+                    <tr><td>2000292820</td><td class="name-cell">MILAN,FELIP JAH ALYSON HERMIAS</td><td><span class="masked">56</span></td><td><span class="masked">90.00</span></td></tr>
+                    <tr><td>2000428731</td><td class="name-cell">NOYNAY,CYDRIK DYLAN BENLOT</td><td><span class="masked">56</span></td><td><span class="masked">82.50</span></td></tr>
+                    <tr><td>2000400857</td><td class="name-cell">OPIALA,RAVEN MARAVILES</td><td><span class="masked">60</span></td><td><span class="masked">85.36</span></td></tr>
+                    <tr><td>2000293934</td><td class="name-cell">PEÑARANDA,FRANCES ABIGAIL MAYOR</td><td><span class="masked">64</span></td><td><span class="masked">88.21</span></td></tr>
+                    <tr><td>2000411743</td><td class="name-cell">REMOLLENO,NHOREN ANN INDICO</td><td><span class="masked">20</span></td><td><span class="masked">56.79</span></td></tr>
+                    <tr><td>2000416183</td><td class="name-cell">ROSALES,TRISHA MONIQUE CAGOYONG</td><td><span class="masked">44</span></td><td><span class="masked">69.43</span></td></tr>
+                    <tr><td>2000301723</td><td class="name-cell">SENO,JOHN LLOYD TORDILLO</td><td><span class="masked">52</span></td><td><span class="masked">79.64</span></td></tr>
+                    <tr><td>2000323180</td><td class="name-cell">SUSON,NICK ANDRE NACION</td><td><span class="masked">0</span></td><td><span class="masked">50.00</span></td></tr>
+                    <tr><td>2000284412</td><td class="name-cell">TABULAO,MARK SAMUEL TARIPE</td><td><span class="masked">66</span></td><td><span class="masked">97.14</span></td></tr>
+                    <tr><td>2000352173</td><td class="name-cell">YOSORES,JAKE ANTHONY SAGALES</td><td><span class="masked">0</span></td><td><span class="masked">20.00</span></td></tr>
+                    <tr><td>2000459899</td><td class="name-cell">ELCARTE,LAURENZ ZENIC CAÑADA</td><td><span class="masked">36</span></td><td><span class="masked">63.71</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -1755,6 +1847,9 @@
       const averageValue = document.getElementById('averageValue');
       const subjectTabs = Array.from(document.querySelectorAll('.subject-tab'));
       const subjectPanels = Array.from(document.querySelectorAll('.subject-panel'));
+      const levelButtons = Array.from(document.querySelectorAll('.level-button'));
+      const secondarySubjects = document.getElementById('secondarySubjects');
+      const tertiarySubjects = document.getElementById('tertiarySubjects');
 
       inputEl.addEventListener('focus', () => {
         if (inputEl.value === 'e.g. 2023-00123') inputEl.value = '';
@@ -1795,7 +1890,8 @@
         const cells = studentRow.querySelectorAll('td');
         const studentNumber = cells[0].textContent.trim();
         const studentName = cells[1].textContent.trim();
-        const grade = Number(cells[5].textContent.trim());
+        const gradeText = cells[cells.length - 1].textContent.trim();
+        const grade = Number(gradeText);
         const passed = grade >= 75;
 
         selectedStudentNumber.textContent = studentNumber;
@@ -1803,7 +1899,17 @@
         totalSubjectsValue.textContent = '1';
         passedValue.textContent = passed ? '1' : '0';
         failedValue.textContent = passed ? '0' : '1';
-        averageValue.textContent = `${grade}%`;
+        averageValue.textContent = `${gradeText}%`;
+      }
+
+      function clearSubjectGrade() {
+        rosterRows.forEach((row) => {
+          row.hidden = true;
+        });
+        totalSubjectsValue.textContent = '0';
+        passedValue.textContent = '0';
+        failedValue.textContent = '0';
+        averageValue.textContent = '—';
       }
 
       function setActiveSubject(subject) {
@@ -1816,6 +1922,30 @@
         subjectPanels.forEach((panel) => {
           panel.hidden = panel.id !== `${subject}Panel`;
         });
+      }
+
+      function setActiveLevel(level) {
+        levelButtons.forEach((button) => {
+          const isActive = button.dataset.level === level;
+          button.classList.toggle('is-active', isActive);
+          button.setAttribute('aria-pressed', String(isActive));
+        });
+
+        secondarySubjects.hidden = level !== 'secondary';
+        tertiarySubjects.hidden = level !== 'tertiary';
+      }
+
+      function showSelectedStudentGrade() {
+        const activePanel = subjectPanels.find((panel) => !panel.hidden);
+        const selectedRow = activePanel && Array.from(activePanel.querySelectorAll('tbody tr')).find((row) => {
+          return row.querySelector('td')?.textContent.trim() === selectedStudentNumber.textContent;
+        });
+
+        if (selectedRow) {
+          showStudent(selectedRow);
+        } else {
+          clearSubjectGrade();
+        }
       }
 
       viewGradesBtn.addEventListener('click', () => {
@@ -1838,6 +1968,7 @@
         });
 
         if (matchingRow) {
+          setActiveLevel(matchingPanel.dataset.level);
           setActiveSubject(matchingPanel.id.replace('Panel', ''));
           showStudent(matchingRow);
           unlockPanel();
@@ -1852,19 +1983,28 @@
       subjectTabs.forEach((tab) => {
         tab.addEventListener('click', () => {
           const selectedSubject = tab.dataset.subject;
+          const matchingPanel = subjectPanels.find((panel) => panel.id === `${selectedSubject}Panel`);
+          setActiveLevel(matchingPanel.dataset.level);
           setActiveSubject(selectedSubject);
 
           if (!mainPanel.classList.contains('panel-locked')) {
-            const activePanel = subjectPanels.find((panel) => !panel.hidden);
-            const selectedRow = Array.from(activePanel.querySelectorAll('tbody tr')).find((row) => {
-              return row.querySelector('td')?.textContent.trim() === selectedStudentNumber.textContent;
-            });
+            showSelectedStudentGrade();
+          }
+        });
+      });
 
-            rosterRows.forEach((row) => {
-              row.hidden = row !== selectedRow;
-            });
+      levelButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const level = button.dataset.level;
+          const firstSubjectTab = subjectTabs.find((tab) => {
+            const panel = subjectPanels.find((item) => item.id === `${tab.dataset.subject}Panel`);
+            return panel.dataset.level === level;
+          });
 
-            if (selectedRow) showStudent(selectedRow);
+          setActiveLevel(level);
+          setActiveSubject(firstSubjectTab.dataset.subject);
+          if (!mainPanel.classList.contains('panel-locked')) {
+            showSelectedStudentGrade();
           }
         });
       });
